@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ActivityRegistration">
+
+
+    <ImageButton
+        android:id="@+id/reg_arrow_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        android:background="@null"
+        android:src="@drawable/arrow_back" />
+
+    <TextView
+        android:id="@+id/label_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="20sp"
+        android:layout_marginTop="80dp"
+        android:textColor="?attr/colorSecondary"
+        android:text="Регистрация" />
+
+    <EditText
+        android:id="@+id/reg_username"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Введите имя пользователя"
+        android:layout_marginTop="40dp"
+        android:textColor="?attr/colorSecondary"
+        android:textColorHint="?attr/colorSecondaryVariant"/>
+
+    <EditText
+        android:id="@+id/reg_email"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Введите email"
+        android:layout_marginTop="10dp"
+        android:textColor="?attr/colorSecondary"
+        android:textColorHint="?attr/colorSecondaryVariant"/>
+
+    <EditText
+        android:id="@+id/reg_pass"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Введите пароль"
+        android:layout_marginTop="10dp"
+        android:textColor="?attr/colorSecondary"
+        android:textColorHint="?attr/colorSecondaryVariant"/>
+
+    <EditText
+        android:id="@+id/reg_pass2"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="Введите пароль ещё раз"
+        android:layout_marginTop="10dp"
+        android:textColor="?attr/colorSecondary"
+        android:textColorHint="?attr/colorSecondaryVariant"/>
+
+    <Button
+        android:id="@+id/btn_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAllCaps="false"
+        android:layout_marginTop="40dp"
+        android:text="Зарегистрироваться" />
+
+    <TextView
+        android:id="@+id/to_auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:textColor="?attr/colorSecondary"
+        android:text="Авторизация" />
+
+
+</LinearLayout>

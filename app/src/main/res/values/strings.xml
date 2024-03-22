@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Рецепты</string>
+    <string name="greeting">Привет, UserName</string>
+    <string name="search">Поиск</string>
+    <string name="rec">Рекомендации</string>
+    <string name="home">На главную</string>
+    <string name="liked">Лайкнутые</string>
+    <string name="acc">Аккаунт</string>
+    <string name="theme">Сменить тему</string>
+    <string name="recepie_name">Название блюда</string>
+    <string name="recepie_ingr">Кол-во ингридиентов</string>
+    <string name="recepie_time">n мин</string>
+    <string name="recepie_kall">n Ккал</string>
+    <string name="recepie_serve">n подач</string>
+    <string name="ingridients">Ингредиенты:</string>
+    <string name="instruction">Этапы приготовления</string>
+    <string name="title_activity_recipe">RecipeActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    
+    <string-array name="topics">
+        <item>Мясные блюда</item>
+        <item>Пицца</item>
+        <item>Супы</item>
+        <item>Паста</item>
+        <item>Салата</item>
+        <item>Рыбные блюда</item>
+        <item>Овощные блюда</item>
+        <item>Десерты и выпечка</item>
+        <item>Напитки и коктейли</item>
+    </string-array>
+
+
+</resources>
