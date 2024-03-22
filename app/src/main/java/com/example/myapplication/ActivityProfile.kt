@@ -152,9 +152,9 @@ class ActivityProfile : AppCompatActivity() {
         val inflater = LayoutInflater.from(context)
         val dialogView = inflater.inflate(R.layout.dialog_new_username, null)
 
-        dialogNewUserName = dialogView.findViewById(R.id.dialog_new_username)
-        btnDialogClose = dialogView.findViewById(R.id.dialog_cansel_username)
-        btnDialogConfirm = dialogView.findViewById(R.id.dialog_confirm_username)
+        val dialogNewUserName: EditText = dialogView.findViewById(R.id.dialog_new_username)
+        val btnDialogClose: ImageButton = dialogView.findViewById(R.id.dialog_cansel_username)
+        val btnDialogConfirm: Button = dialogView.findViewById(R.id.dialog_confirm_username)
 
         val dialogBuilder = AlertDialog.Builder(context).apply {
             setView(dialogView)

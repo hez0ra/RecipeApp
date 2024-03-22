@@ -22,7 +22,7 @@ class FragmentHome: Fragment(), OnLikeClickListener {
 
     private var section: RecyclerView? = null
     private var rec: RecyclerView? = null
-    private var btn_search: ImageButton? = null
+    private var btnSearch: ImageButton? = null
     private var input: EditText? = null
     private lateinit var dbHelper: DbHelper
 
@@ -36,7 +36,7 @@ class FragmentHome: Fragment(), OnLikeClickListener {
 
         section = view.findViewById(R.id.recycler_view_section)
         rec = view.findViewById(R.id.main_recycler_rec)
-        btn_search = view.findViewById(R.id.home_img_search)
+        btnSearch = view.findViewById(R.id.home_img_search)
         input = view.findViewById(R.id.home_input)
         dbHelper = DbHelper(requireContext(), null)
 
@@ -53,7 +53,7 @@ class FragmentHome: Fragment(), OnLikeClickListener {
 
         section?.adapter = AdapterMainSection(itemsTopics, requireContext())
 
-        if(dbHelper.getAllRecipes().size == 0){
+        if(dbHelper.getAllRecipes().isEmpty()){
             dbHelper.addRecipe(
                 Recipe("Салат цезарь", 25u, 400u, 4u,
                 listOf("Куриное яйцо!1 шт", "Чеснок!3 зуб", "Томаты черри!150 г", "Лимонный сок!2 ст л", "Перепелиное яйцо!5 шт", "Оливковое масло!100 мл", "Креветки!250 г", "Пармезан! 75 г", "Листья салата! 150 г", "Горчица! 1 ч л", "Багет!125 г", "Вустерский соус!2 ч л", "Анчоусы!10 шт"),
@@ -256,7 +256,7 @@ class FragmentHome: Fragment(), OnLikeClickListener {
         val itemsRec = dbHelper.getAllRecipes().reversed()
         rec?.adapter = AdapterMainRec(itemsRec, requireContext(), this)
 
-        btn_search?.setOnClickListener{ toSearch() }
+        btnSearch?.setOnClickListener{ toSearch() }
     }
 
     override fun onResume() {

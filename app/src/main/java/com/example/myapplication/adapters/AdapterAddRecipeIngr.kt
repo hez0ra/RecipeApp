@@ -19,7 +19,7 @@ import com.example.myapplication.helpers.Delete
 import com.example.myapplication.helpers.ImageHelper
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
-class AdapterAddRecipeIngr(var items: List<String>, var context: Context, private val listener: Delete) : RecyclerView.Adapter<AdapterAddRecipeIngr.MyViewHolder>() {
+class AdapterAddRecipeIngr(private var items: List<String>, var context: Context, private val listener: Delete) : RecyclerView.Adapter<AdapterAddRecipeIngr.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val mainImg: ImageView = view.findViewById(R.id.add_recipe_recycler_img)
@@ -30,7 +30,7 @@ class AdapterAddRecipeIngr(var items: List<String>, var context: Context, privat
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_add_recipe_ingredients, parent, false)
-        return AdapterAddRecipeIngr.MyViewHolder(view)
+        return MyViewHolder(view)
     }
 
     override fun getItemCount(): Int {
@@ -45,8 +45,8 @@ class AdapterAddRecipeIngr(var items: List<String>, var context: Context, privat
             itemsName.add(buff[0])
             itemsAmount.add(buff[1])
         }
-        holder.name.text = itemsName[pos];
-        holder.amount.text = itemsAmount[pos];
+        holder.name.text = itemsName[pos]
+        holder.amount.text = itemsAmount[pos]
         val radiusInPixels = (20 * context.resources.displayMetrics.density).toInt()
         val resourceId = context.resources.getIdentifier(ImageHelper.translate(itemsName[pos]), "drawable", context.packageName)
 

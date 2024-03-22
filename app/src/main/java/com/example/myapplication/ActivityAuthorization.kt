@@ -16,13 +16,13 @@ import com.example.myapplication.helpers.SharedPreferencesManager
 
 class ActivityAuthorization : AppCompatActivity() {
 
-    private var btnAuth: Button? = null;
-    private var btnBack: ImageButton? = null;
-    private var email: EditText? = null;
-    private var pass: EditText? = null;
-    private var check: CheckBox? = null;
-    private var toReg: TextView? = null;
-    private var drop: TextView? = null;
+    private var btnAuth: Button? = null
+    private var btnBack: ImageButton? = null
+    private var email: EditText? = null
+    private var pass: EditText? = null
+    private var check: CheckBox? = null
+    private var toReg: TextView? = null
+    private var drop: TextView? = null
     private var currentNightMode: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {

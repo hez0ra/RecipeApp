@@ -3,16 +3,16 @@ package com.example.myapplication.helpers
 import com.example.myapplication.User
 
 object ActiveUser {
-    private var user: User? = null;
-    private var userId : Int? = null;
-    private var isAdmin: Boolean = false;
-    private var attachToCreate: Boolean = false;
+    private var user: User? = null
+    private var userId : Int? = null
+    private var isAdmin: Boolean = false
+    private var attachToCreate: Boolean = false
 
     fun setUser(user: User?) {
-        ActiveUser.user = user;
+        ActiveUser.user = user
     }
     fun setUserId(id: Int){
-        userId = id;
+        userId = id
     }
     fun getUser(): User?{
         return user

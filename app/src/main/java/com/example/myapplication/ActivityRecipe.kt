@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.graphics.drawable.GradientDrawable
 import android.graphics.text.LineBreaker
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +7,7 @@ import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.TooltipCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,7 +22,7 @@ import eightbitlab.com.blurview.BlurView
 class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
 
     // Объявление переменных
-    private var recyclerIngredients: RecyclerView? = null;
+    private var recyclerIngredients: RecyclerView? = null
     private var btnBack: ImageButton? = null
     private var btnLike: ImageButton? = null
     private var mainImg: ImageView? = null
@@ -30,7 +30,7 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
     private var minutesImg: ImageView? = null
     private var servImg: ImageView? = null
     private var textMain: TextView? = null
-    private var countIngridients: TextView? = null
+    private var countIngredients: TextView? = null
     private var minutes: TextView? = null
     private var kcal: TextView? = null
     private var serv: TextView? = null
@@ -42,6 +42,7 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
     private val redHeart = R.drawable.heart_red
     private  var currentNightMode: Int = -1
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe)
@@ -55,7 +56,7 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
         minutesImg = findViewById(R.id.recipe_img_time)
         servImg = findViewById(R.id.recipe_img_serv)
         textMain = findViewById(R.id.recipe_name)
-        countIngridients = findViewById(R.id.recipe_undertitle)
+        countIngredients = findViewById(R.id.recipe_undertitle)
         minutes = findViewById(R.id.recipe_text_time)
         kcal = findViewById(R.id.recipe_text_kcal)
         serv = findViewById(R.id.recipe_text_serv)
@@ -72,17 +73,17 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
         recipe = dbHelper.getRecipeById(intent.getIntExtra("id", 1))
         textMain?.text = recipe?.name
         when(recipe?.countIngr){
-            1 -> countIngridients?.text ="${recipe?.countIngr.toString()} ингредиент"
-            2,3,4 -> countIngridients?.text ="${recipe?.countIngr.toString()} ингредиента"
-            else -> countIngridients?.text ="${recipe?.countIngr.toString()} ингредиентов"
+            1 -> countIngredients?.text ="${recipe?.countIngr.toString()} ингредиент"
+            2,3,4 -> countIngredients?.text ="${recipe?.countIngr.toString()} ингредиента"
+            else -> countIngredients?.text ="${recipe?.countIngr.toString()} ингредиентов"
         }
-        var instruction_: String = ""
-        var i = 1;
+        var instructionBuff = ""
+        var i = 1
         for(item: String in recipe?.instruction!!){
-            instruction_ += i.toString() + ". " + item + "\n\n"
+            instructionBuff += i.toString() + ". " + item + "\n\n"
             i++
         }
-        instruction?.text = instruction_
+        instruction?.text = instructionBuff
         minutes?.text = recipe?.time.toString() + " мин"
         kcal?.text = recipe?.kcal.toString() + " ккал"
         when(recipe?.serv){
@@ -132,7 +133,6 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
             instruction?.justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
         }
 
-
         // При тёмной теме делать иконки белыми
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
             ChangeColor.makeImageWhite(kcalImg)
@@ -147,13 +147,9 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
     override fun onLikeClicked(recipeId: Int, isLiked: Boolean) {
         if(ActiveUser.getUser() != null){
             if(isLiked){
-//                val toast = Toast.makeText(this, "Ты анлайкнул", Toast.LENGTH_SHORT)
-//                toast.show()
                 dbHelper.removeLike(ActiveUser.getUserId()!!, recipeId)
             }
             else{
-//                val toast = Toast.makeText(this, "Ты Лайкнул", Toast.LENGTH_SHORT)
-//                toast.show()
                 dbHelper.addLike(ActiveUser.getUserId()!!, recipeId)
             }
         }

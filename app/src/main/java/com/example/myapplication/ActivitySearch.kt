@@ -16,7 +16,7 @@ import com.example.myapplication.helpers.OnLikeClickListener
 class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
 
     private var recycler: RecyclerView? = null
-    private var btn_search: ImageButton? = null
+    private var btnSearch: ImageButton? = null
     private var input: EditText? = null
     private lateinit var dbHelper: DbHelper
 
@@ -25,23 +25,22 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
         setContentView(R.layout.activity_search)
 
         recycler = findViewById(R.id.search_recycler)
-        btn_search = findViewById(R.id.search_btn)
+        btnSearch = findViewById(R.id.search_btn)
         input = findViewById(R.id.search_input)
         dbHelper = DbHelper(this, null)
 
-        val adapter: AdapterSearch
-        when(intent.getStringExtra("variant")){
-            "all" ->  adapter = AdapterSearch(dbHelper.getAllRecipes(), this, this)
-            "pizza" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("pizza"), this, this)
-            "pasta" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("pasta"), this, this)
-            "meat" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("meat"), this, this)
-            "soup" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("soup"), this, this)
-            "fish" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("fish"), this, this)
-            "vegetables" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("vegetables"), this, this)
-            "dessert" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("dessert"), this, this)
-            "cocktail" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("cocktail"), this, this)
-            "salad" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("salad"), this, this)
-            else -> adapter = AdapterSearch(dbHelper.getAllRecipes(), this, this)
+        val adapter: AdapterSearch = when(intent.getStringExtra("variant")){
+            "all" -> AdapterSearch(dbHelper.getAllRecipes(), this, this)
+            "pizza" -> AdapterSearch(dbHelper.getRecipesByCategory("pizza"), this, this)
+            "pasta" -> AdapterSearch(dbHelper.getRecipesByCategory("pasta"), this, this)
+            "meat" -> AdapterSearch(dbHelper.getRecipesByCategory("meat"), this, this)
+            "soup" -> AdapterSearch(dbHelper.getRecipesByCategory("soup"), this, this)
+            "fish" -> AdapterSearch(dbHelper.getRecipesByCategory("fish"), this, this)
+            "vegetables" -> AdapterSearch(dbHelper.getRecipesByCategory("vegetables"), this, this)
+            "dessert" -> AdapterSearch(dbHelper.getRecipesByCategory("dessert"), this, this)
+            "cocktail" -> AdapterSearch(dbHelper.getRecipesByCategory("cocktail"), this, this)
+            "salad" -> AdapterSearch(dbHelper.getRecipesByCategory("salad"), this, this)
+            else -> AdapterSearch(dbHelper.getAllRecipes(), this, this)
         }
         recycler?.adapter = adapter
         input?.setText(intent.getStringExtra("input"))
@@ -67,27 +66,21 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
             else{
                 dbHelper.addLike(ActiveUser.getUserId()!!, recipeId)
             }
-            var itemsRec: List<Recipe>
-            when(intent.getStringExtra("variant")){
-                "all" ->  itemsRec = dbHelper.getAllRecipes()
-                "pizza" -> itemsRec = dbHelper.getAllRecipes()
-                "pasta" -> itemsRec =dbHelper.getRecipesByCategory("pasta")
-                "meat" -> itemsRec = dbHelper.getRecipesByCategory("meat")
-                "soup" -> itemsRec = dbHelper.getRecipesByCategory("soup")
-                "fish" -> itemsRec = dbHelper.getRecipesByCategory("fish")
-                "vegetables" -> itemsRec =dbHelper.getRecipesByCategory("vegetables")
-                "dessert" -> itemsRec =dbHelper.getRecipesByCategory("dessert")
-                "cocktail" -> itemsRec =dbHelper.getRecipesByCategory("cocktail")
-                "salad" -> itemsRec =dbHelper.getRecipesByCategory("salad")
-                else -> itemsRec = dbHelper.getAllRecipes()
+            var itemsRec: List<Recipe> = when(intent.getStringExtra("variant")){
+                "all" -> dbHelper.getAllRecipes()
+                "pizza" -> dbHelper.getAllRecipes()
+                "pasta" -> dbHelper.getRecipesByCategory("pasta")
+                "meat" -> dbHelper.getRecipesByCategory("meat")
+                "soup" -> dbHelper.getRecipesByCategory("soup")
+                "fish" -> dbHelper.getRecipesByCategory("fish")
+                "vegetables" -> dbHelper.getRecipesByCategory("vegetables")
+                "dessert" -> dbHelper.getRecipesByCategory("dessert")
+                "cocktail" -> dbHelper.getRecipesByCategory("cocktail")
+                "salad" -> dbHelper.getRecipesByCategory("salad")
+                else -> dbHelper.getAllRecipes()
             }
-
             itemsRec = itemsRec.filter { it.name.contains(input!!.text, ignoreCase = true) }
-
-            // Найдите позицию элемента в вашем списке, который нужно обновить
             val positionToUpdate = itemsRec.indexOfFirst { it.id == recipeId }
-
-            // Если позиция найдена, обновите только этот элемент
             if (positionToUpdate != -1) {
                 recycler?.adapter?.notifyItemChanged(positionToUpdate)
             }

@@ -21,7 +21,7 @@ import com.example.myapplication.helpers.ImageHelper
 import com.example.myapplication.helpers.OnLikeClickListener
 import eightbitlab.com.blurview.BlurView
 
-class AdapterMainRec(var items: List<Recipe>, var context: Context, private val listener: OnLikeClickListener) : RecyclerView.Adapter<AdapterMainRec.MyViewHolder>() {
+class AdapterMainRec(private var items: List<Recipe>, var context: Context, private val listener: OnLikeClickListener) : RecyclerView.Adapter<AdapterMainRec.MyViewHolder>() {
 
     private lateinit var dbHelper: DbHelper
     private var listOfLikes = listOf<Recipe?>()
@@ -66,18 +66,18 @@ class AdapterMainRec(var items: List<Recipe>, var context: Context, private val 
 
         when (items[pos].countIngr) {
             1 -> holder.description.text =
-                "${items[pos].countIngr.toString()} ингридиент • ${items[pos].time.toString()} мин"
+                "${items[pos].countIngr} ингридиент • ${items[pos].time} мин"
             2, 3, 4 -> holder.description.text =
-                "${items[pos].countIngr.toString()} ингридиента • ${items[pos].time.toString()} мин"
+                "${items[pos].countIngr} ингридиента • ${items[pos].time} мин"
             else -> holder.description.text =
-                "${items[pos].countIngr.toString()} ингридиентов • ${items[pos].time.toString()} мин"
+                "${items[pos].countIngr} ингридиентов • ${items[pos].time} мин"
         }
 
         Glide.with(context)
             .load(items[pos].image)
             .apply(RequestOptions.skipMemoryCacheOf(true)) // Не кэшировать изображение в памяти
             .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.NONE)) // Не кэшировать изображение на диске
-            .apply(RequestOptions().transforms(CenterCrop(), RoundedCorners(radiusInPixels.toInt())))
+            .apply(RequestOptions().transforms(CenterCrop(), RoundedCorners(radiusInPixels)))
             .into(holder.image)
 
         holder.image.setOnClickListener {

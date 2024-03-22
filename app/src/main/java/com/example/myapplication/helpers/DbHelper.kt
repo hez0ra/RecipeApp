@@ -48,8 +48,7 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        var query = "";
-        query = """CREATE TABLE $TABLE_USERS (
+        var query: String = """CREATE TABLE $TABLE_USERS (
             $USERS_ID INTEGER PRIMARY KEY AUTOINCREMENT, 
             $USERS_USERNAME TEXT, 
             $USERS_EMAIL TEXT, 
@@ -60,7 +59,7 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
 
         query = "INSERT INTO $TABLE_USERS ($USERS_USERNAME, $USERS_EMAIL, $USERS_PASS, $USERS_IMAGE) VALUES (?, ?, ?, ?)"
         val values = arrayOf("admin", "admin@gmail.com", "admin123", defaultAvatar)
-        db!!.execSQL(query, values)
+        db.execSQL(query, values)
 
         query = """CREATE TABLE $TABLE_RECIPES (
             $RECIPES_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -73,7 +72,7 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             $RECIPES_IMAGE BLOB,
             $RECIPES_CATEGORY TEXT)
         """.trimIndent()
-        db!!.execSQL(query)
+        db.execSQL(query)
         query= """
             CREATE TABLE $TABLE_LIKES (
             $LIKES_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,7 +81,7 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             FOREIGN KEY ($LIKES_USER) REFERENCES $TABLE_USERS($USERS_ID) ON DELETE CASCADE,
             FOREIGN KEY ($LIKES_RECIPE) REFERENCES $TABLE_RECIPES($RECIPES_ID) ON DELETE CASCADE)
             """.trimIndent()
-        db!!.execSQL(query)
+        db.execSQL(query)
         query= """
             CREATE TABLE $TABLE_ADMINS (
             $ADMINS_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -90,17 +89,17 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             $ADMINS_ATTACH_CREATE BOOLEAN,
             FOREIGN KEY ($ADMINS_USER_ID) REFERENCES $TABLE_USERS($USERS_ID) ON DELETE CASCADE)
             """.trimIndent()
-        db!!.execSQL(query)
+        db.execSQL(query)
         query = """
             INSERT INTO $TABLE_ADMINS ($ADMINS_USER_ID, $ADMINS_ATTACH_CREATE) VALUES (1, true)
         """.trimIndent()
-        db!!.execSQL(query)
+        db.execSQL(query)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_USERS")
-        db!!.execSQL("DROP TABLE IF EXISTS $TABLE_RECIPES")
-        db!!.execSQL("DROP TABLE IF EXISTS $TABLE_LIKES")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_RECIPES")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_LIKES")
         onCreate(db)
     }
 
@@ -140,8 +139,6 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
                 if(adminCheck(id)) ActiveUser.setAttachToCreate(attachToCreateCheck(id))
             }
         }
-
-        db.close()
     }
 
     fun getUser(id: Int){
@@ -198,15 +195,6 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         db.close()
     }
 
-    fun getAvatar(userID: Int) : ByteArray?{
-        val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM $TABLE_USERS WHERE $USERS_ID = '$userID'", null)
-        if(cursor.moveToFirst()){
-            return cursor.getBlob(cursor.getColumnIndexOrThrow(USERS_IMAGE))
-        }
-        return null
-    }
-
     fun getAllUsers(): ArrayList<User> {
         val usersList = arrayListOf<User>()
         val db = this.readableDatabase
@@ -227,11 +215,8 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             } else {
                 break // Прерываем цикл, если больше нет данных
             }
-            cursor.close()
             offset += limit // Увеличиваем смещение для следующей порции запроса
         }
-
-        db.close()
         return usersList
     }
 
@@ -262,10 +247,9 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
     fun attachToCreateCheck(userID: Int): Boolean{
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM $TABLE_ADMINS WHERE $ADMINS_USER_ID = '$userID'", null)
-        if(cursor.moveToFirst()){
-            return cursor.getInt(cursor.getColumnIndexOrThrow(ADMINS_ATTACH_CREATE)) != 0
-        }
-        else return false
+        return if(cursor.moveToFirst()){
+            cursor.getInt(cursor.getColumnIndexOrThrow(ADMINS_ATTACH_CREATE)) != 0
+        } else false
     }
 
     fun addRecipe(recipe: Recipe) {
@@ -281,7 +265,6 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             put(RECIPES_CATEGORY, recipe.category)
         }
         db.insert(TABLE_RECIPES, null, values)
-
         db.close()
     }
 
@@ -310,11 +293,8 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             } else {
                 break // Прерываем цикл, если больше нет данных
             }
-            cursor.close()
             offset += limit // Увеличиваем смещение для следующей порции запроса
         }
-
-        db.close()
         return recipeList
     }
 
@@ -334,8 +314,6 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
 
             recipe = Recipe(recipeID, name, time.toUInt(), kcal.toUInt(), serv.toUInt(), ingredients, instruction, image, category)
         }
-        cursor.close()
-        db.close()
         return recipe
     }
 
@@ -363,11 +341,8 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             } else {
                 break // Прерываем цикл, если больше нет данных
             }
-            cursor.close()
             offset += limit // Увеличиваем смещение для следующей порции запроса
         }
-
-        db.close()
         return recipeList
     }
 
@@ -403,8 +378,6 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             val recipe = getRecipeById(recipeID)
             recipeList.add(recipe)
         }
-        result.close()
-        db.close()
         return recipeList
     }
 

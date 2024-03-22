@@ -50,7 +50,7 @@ class FragmentFooter: Fragment() {
         btnAdmin?.setOnClickListener { toAdminPanel() }
 
 
-        if(ActiveUser.getIsAdmin() == true){
+        if(ActiveUser.getIsAdmin()){
             btnAdmin?.visibility = View.VISIBLE
         }
         else{
@@ -61,7 +61,7 @@ class FragmentFooter: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if(ActiveUser.getIsAdmin() == true){
+        if(ActiveUser.getIsAdmin()){
             btnAdmin?.visibility = View.VISIBLE
         }
         else{

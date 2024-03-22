@@ -39,8 +39,6 @@ class FragmentLikes: Fragment(), OnLikeClickListener {
     }
 
     override fun onLikeClicked(recipeId: Int, isLiked: Boolean) {
-//        val toast = Toast.makeText(context, "Ты анлайкнул", Toast.LENGTH_SHORT)
-//        toast.show()
         dbHelper.removeLike(ActiveUser.getUserId()!!, recipeId)
         recycler?.adapter = AdapterLikes(dbHelper.getLike(ActiveUser.getUserId()!!), requireContext(), this)
     }

@@ -14,7 +14,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.R
 
-class AdapterRecipe(var items: List<String>, var context: Context) : RecyclerView.Adapter<AdapterRecipe.MyViewHolder>() {
+class AdapterRecipe(private var items: List<String>, var context: Context) : RecyclerView.Adapter<AdapterRecipe.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val mainImg: ImageView = view.findViewById(R.id.recipe_recycler_ingredients_item_icon)
@@ -40,8 +40,8 @@ class AdapterRecipe(var items: List<String>, var context: Context) : RecyclerVie
             itemsName.add(buff[0])
             itemsAmount.add(buff[1])
         }
-        holder.name.text = itemsName[pos];
-        holder.amount.text = itemsAmount[pos];
+        holder.name.text = itemsName[pos]
+        holder.amount.text = itemsAmount[pos]
         val radiusInPixels = (20 * context.resources.displayMetrics.density).toInt()
         val resourceId = context.resources.getIdentifier(ImageHelper.translate(itemsName[pos]), "drawable", context.packageName)
         Glide.with(context)

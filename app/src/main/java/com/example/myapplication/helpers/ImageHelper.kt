@@ -6,10 +6,7 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.myapplication.R
 import eightbitlab.com.blurview.BlurView
@@ -98,20 +95,19 @@ object ImageHelper {
             "Темный шоколал", "Шоколад" -> return "chocolate"
             "Грецкие орехи" -> return "walnuts"
             "Сухие дрожжи" -> return "dry_yeast"
-            "Красное сухое вино", "Вино", "Белон вино", "Красное вино" -> return ""
+            "Красное сухое вино", "Вино", "Белон вино", "Красное вино" -> return "wine"
             "Яблоко" -> return "apple"
             "Апельсин" -> return "orange"
             "Корица" -> return "cinnamon"
             "Гвоздика" -> return "carnation"
-            "Анис" -> return "anise"
             "Кардамон" -> return "cardamom"
             "Мускатный орех" -> return "nutmeg"
             "Имбирь" -> return "ginger"
             "Каркаде" -> return "hibiscus"
             "Черный чай" -> return "tea"
             "Зеленый лук" -> return "green_onion"
-            "" -> return ""
-            "" -> return ""
+            "Мед" -> return "honey"
+            "Анис", "Бадьян", "Анис (бадьян)", "Анис(бадьян)" -> return "anise"
             "" -> return ""
             else -> return "load"
         }
@@ -249,15 +245,6 @@ object ImageHelper {
     }
 
 
-
-
-
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-    fun getDrawableFromImageView(imageView: ImageView): Drawable {
-        return imageView.drawable
-    }
-
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     fun getBitmapFromDrawable(drawable: Drawable): Bitmap {
         return (drawable as BitmapDrawable).bitmap
     }

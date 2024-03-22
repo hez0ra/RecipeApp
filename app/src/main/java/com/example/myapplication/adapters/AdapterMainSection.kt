@@ -15,7 +15,7 @@ import com.example.myapplication.ActivitySearch
 import com.example.myapplication.R
 import com.example.myapplication.Section
 
-class AdapterMainSection(var items: List<Section>, var context: Context) : RecyclerView.Adapter<AdapterMainSection.MyViewHolder>(){
+class AdapterMainSection(private var items: List<Section>, var context: Context) : RecyclerView.Adapter<AdapterMainSection.MyViewHolder>(){
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.section_topic)
@@ -27,7 +27,7 @@ class AdapterMainSection(var items: List<Section>, var context: Context) : Recyc
     }
 
     override fun getItemCount(): Int {
-        return items.count();
+        return items.count()
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

@@ -16,10 +16,24 @@ class Recipe(var id: Int, var name: String, var time: UInt, var kcal: UInt, var 
             serv == other.serv &&
             ingridients == other.ingridients &&
             instruction == other.instruction &&
-            image == other.image
+            image.contentEquals(other.image)
         }
         else{
             return false
         }
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + name.hashCode()
+        result = 31 * result + time.hashCode()
+        result = 31 * result + kcal.hashCode()
+        result = 31 * result + serv.hashCode()
+        result = 31 * result + ingridients.hashCode()
+        result = 31 * result + instruction.hashCode()
+        result = 31 * result + image.contentHashCode()
+        result = 31 * result + category.hashCode()
+        result = 31 * result + countIngr
+        return result
     }
 }

@@ -18,7 +18,7 @@ import com.example.myapplication.helpers.OnLikeClickListener
 import com.example.myapplication.R
 import com.example.myapplication.Recipe
 
-class AdapterLikes(var items: List<Recipe?>, var context: Context, private val listener: OnLikeClickListener): RecyclerView.Adapter<AdapterLikes.MyViewHolder>() {
+class AdapterLikes(private var items: List<Recipe?>, var context: Context, private val listener: OnLikeClickListener): RecyclerView.Adapter<AdapterLikes.MyViewHolder>() {
 
     class MyViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val name: TextView = view.findViewById(R.id.likes_recycler_item_name)
