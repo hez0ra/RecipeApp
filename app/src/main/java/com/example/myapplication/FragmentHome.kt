@@ -176,7 +176,7 @@ class FragmentHome: Fragment(), OnLikeClickListener {
                 ImageHelper.compressImage(requireContext(), R.drawable.meat_chicken_chop_in_batter), "meat")
             )
             dbHelper.addRecipe(
-                Recipe("Салат Ольвье", 30u, 429u, 4u,
+                Recipe("Салат Оливье", 30u, 429u, 4u,
                 listOf("Докторская колбаса!300 г", "Картофель!4 шт", "Морковь!1 шт", "Куриное яйцо!4 шт", "Репчатый лук!1 шт", "Маринованные огурцы!4 шт", "Зеленый горошек!1/2 банки", "Майонез!по вкусу", "Соль!по вкусу", "Молотый черный перец!по вкусу"),
                 listOf("Картофель и морковь хорошо промыть. Переложить овощи в кастрюлю, залить водой, довести до кипения и варить до мягкости (которая проверяется при помощи ножа).",
                 "Готовые овощи вымыть, остудить, а затем очистить. Яйца положить в подсоленную воду и варить в течение 10 минут. Остудить, очистить и порубить яйца. Картофель и морковь нарезать небольшими кубиками. Огурцы нарезать небольшими кубиками.",
@@ -268,13 +268,9 @@ class FragmentHome: Fragment(), OnLikeClickListener {
     override fun onLikeClicked(recipeId: Int, isLiked: Boolean) {
         if(ActiveUser.getUser() != null){
             if(isLiked){
-//                val toast = Toast.makeText(requireContext(), "Ты анлайкнул", Toast.LENGTH_SHORT)
-//                toast.show()
                 dbHelper.removeLike(ActiveUser.getUserId()!!, recipeId)
             }
             else{
-//                val toast = Toast.makeText(requireContext(), "Ты Лайкнул", Toast.LENGTH_SHORT)
-//                toast.show()
                 dbHelper.addLike(ActiveUser.getUserId()!!, recipeId)
             }
             val itemsRec = dbHelper.getAllRecipes().reversed()

@@ -29,7 +29,7 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
         input = findViewById(R.id.search_input)
         dbHelper = DbHelper(this, null)
 
-        var adapter: AdapterSearch
+        val adapter: AdapterSearch
         when(intent.getStringExtra("variant")){
             "all" ->  adapter = AdapterSearch(dbHelper.getAllRecipes(), this, this)
             "pizza" -> adapter = AdapterSearch(dbHelper.getRecipesByCategory("pizza"), this, this)
@@ -62,13 +62,9 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
     override fun onLikeClicked(recipeId: Int, isLiked: Boolean) {
         if(ActiveUser.getUser() != null){
             if(isLiked){
-//                val toast = Toast.makeText(this, "Ты анлайкнул", Toast.LENGTH_SHORT)
-//                toast.show()
                 dbHelper.removeLike(ActiveUser.getUserId()!!, recipeId)
             }
             else{
-//                val toast = Toast.makeText(this, "Ты Лайкнул", Toast.LENGTH_SHORT)
-//                toast.show()
                 dbHelper.addLike(ActiveUser.getUserId()!!, recipeId)
             }
             var itemsRec: List<Recipe>
@@ -85,6 +81,8 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
                 "salad" -> itemsRec =dbHelper.getRecipesByCategory("salad")
                 else -> itemsRec = dbHelper.getAllRecipes()
             }
+
+            itemsRec = itemsRec.filter { it.name.contains(input!!.text, ignoreCase = true) }
 
             // Найдите позицию элемента в вашем списке, который нужно обновить
             val positionToUpdate = itemsRec.indexOfFirst { it.id == recipeId }
