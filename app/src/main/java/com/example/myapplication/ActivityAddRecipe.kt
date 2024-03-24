@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.myapplication.adapters.AdapterAddRecipeIngr
 import com.example.myapplication.adapters.AdapterAddRecipeInstruction
 import com.example.myapplication.helpers.ChangeColor
@@ -56,8 +57,7 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
         serv = findViewById(R.id.add_recipe_serv)
         img = findViewById(R.id.add_recipe_img)
         instrText = findViewById(R.id.add_recipe_instruction_input)
-        currentNightMode =
-            resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+        currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
 
 
         ingredients?.adapter = AdapterAddRecipeIngr(arrayOfIngredients, this, this)
@@ -73,6 +73,8 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
             ChangeColor.invertColors(btnAddIngredients)
             ChangeColor.invertColors(btnAddInstructions)
         }
+
+        checkIfEdit()
 
         supportActionBar?.hide()
         category?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -133,8 +135,19 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
         if(Name != "" && Kcal != "" && Time != "" && Serv != "" && Image != ImageHelper.getBitmapFromDrawable(ContextCompat.getDrawable(this, R.drawable.plus)!!) && arrayOfIngredients.size != 0 && arrayOfInstructions.size != 0){
             Toast.makeText(this, "nice", Toast.LENGTH_SHORT).show()
             val dbHelper = DbHelper(this, null)
+            val selectedCategory = when(category?.selectedItem.toString()){
+                "Пицца" -> "pizza"
+                "Супы" -> "soup"
+                "Паста" -> "pasta"
+                "Салаты" -> "salad"
+                "Рыбные блюда" -> "fish"
+                "Овощные блюда" -> "vegetables"
+                "Десерты и выпечка" -> "dessert"
+                "Напитки и коктейли" -> "cocktail"
+                else -> "meat"
+            }
             dbHelper.addRecipe(Recipe(Name, Time.toUInt(), Kcal.toUInt(), Serv.toUInt(), arrayOfIngredients, arrayOfInstructions,
-                ImageHelper.compressImage(img!!.drawable), category?.selectedItem.toString()))
+                ImageHelper.compressImage(img!!.drawable), selectedCategory))
             name!!.text.clear()
             kcal!!.text.clear()
             time!!.text.clear()
@@ -147,6 +160,68 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
         }
         else{
             Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveChanges(recipeID: Int){
+        val Name = name?.text.toString()
+        val Kcal = kcal?.text.toString()
+        val Time = time?.text.toString()
+        val Serv = serv?.text.toString()
+        val Image = ImageHelper.getBitmapFromDrawable(img!!.drawable)
+
+        if(Name != "" && Kcal != "" && Time != "" && Serv != "" && Image != ImageHelper.getBitmapFromDrawable(ContextCompat.getDrawable(this, R.drawable.plus)!!) && arrayOfIngredients.size != 0 && arrayOfInstructions.size != 0){
+            Toast.makeText(this, "nice", Toast.LENGTH_SHORT).show()
+            val dbHelper = DbHelper(this, null)
+            val selectedCategory = when(category?.selectedItem.toString()){
+                "Пицца" -> "pizza"
+                "Супы" -> "soup"
+                "Паста" -> "pasta"
+                "Салаты" -> "salad"
+                "Рыбные блюда" -> "fish"
+                "Овощные блюда" -> "vegetables"
+                "Десерты и выпечка" -> "dessert"
+                "Напитки и коктейли" -> "cocktail"
+                else -> "meat"
+            }
+            dbHelper.editRecipe(recipeID, Recipe(Name, Time.toUInt(), Kcal.toUInt(), Serv.toUInt(), arrayOfIngredients, arrayOfInstructions,
+                ImageHelper.compressImage(img!!.drawable), selectedCategory))
+            finish()
+        }
+        else{
+            Toast.makeText(this, "Заполните все поля", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkIfEdit(){
+        val id = intent.getIntExtra("id", -1)
+        if(id != -1){
+            val dbHelper = DbHelper(this, null)
+            val recipe = dbHelper.getRecipeById(id)
+            name?.setText(recipe?.name)
+            time?.setText(recipe?.time.toString())
+            kcal?.setText(recipe?.kcal.toString())
+            serv?.setText(recipe?.serv.toString())
+            category?.setSelection(when(recipe?.category){
+                "pizza" -> 1
+                "soup" -> 2
+                "pasta" -> 3
+                "salad" -> 4
+                "fish" -> 5
+                "vegetables" -> 6
+                "dessert" -> 7
+                "cocktail" -> 8
+                else -> 0
+            })
+            arrayOfIngredients = ArrayList(recipe?.ingridients!!)
+            arrayOfInstructions = ArrayList(recipe?.instruction!!)
+            ingredients?.adapter = AdapterAddRecipeIngr(arrayOfIngredients, this, this)
+            instruction?.adapter = AdapterAddRecipeInstruction(arrayOfInstructions, this, this)
+            Glide.with(this)
+                .load(recipe?.image)
+                .into(img!!)
+            btnConfirm?.text = "Сохранить изменения"
+            btnConfirm?.setOnClickListener { saveChanges(recipe?.id!!) }
         }
     }
 

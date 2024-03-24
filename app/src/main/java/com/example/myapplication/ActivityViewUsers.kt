@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.AdapterViewUsers
+import com.example.myapplication.helpers.ChangeColor
 import com.example.myapplication.helpers.DbHelper
 import com.example.myapplication.helpers.Delete
 
@@ -15,6 +16,7 @@ class ActivityViewUsers : AppCompatActivity(), Delete {
     private var btnBack: ImageButton? = null
     private lateinit var dbHelper: DbHelper
     private var arrayOfUsers = arrayListOf<User>()
+    private  var currentNightMode: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,10 @@ class ActivityViewUsers : AppCompatActivity(), Delete {
         recycler?.adapter = AdapterViewUsers(arrayOfUsers, this, this)
 
         btnBack?.setOnClickListener { finish() }
+
+        if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
+            ChangeColor.invertColors(btnBack)
+        }
 
         supportActionBar?.hide()
     }

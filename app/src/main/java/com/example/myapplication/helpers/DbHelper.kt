@@ -252,6 +252,14 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         } else false
     }
 
+    fun deleteAdmin(userID: Int){
+        val db = this.writableDatabase
+        val selection = "$ADMINS_USER_ID = ?"
+        val selectionArgs = arrayOf(userID.toString())
+        db.delete(TABLE_ADMINS, selection, selectionArgs)
+        db.close()
+    }
+
     fun addRecipe(recipe: Recipe) {
         val db = this.writableDatabase
         val values = ContentValues().apply {
@@ -344,6 +352,28 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             offset += limit // Увеличиваем смещение для следующей порции запроса
         }
         return recipeList
+    }
+
+    fun editRecipe(recipeID: Int, recipe: Recipe){
+        val db = this.writableDatabase
+        val contentValues = ContentValues().apply {
+            put(RECIPES_NAME, recipe.name)
+            put(RECIPES_TIME, recipe.time.toInt())
+            put(RECIPES_KCAL, recipe.kcal.toInt())
+            put(RECIPES_SERV, recipe.serv.toInt())
+            put(RECIPES_INGREDIENTS, recipe.ingridients.joinToString("|"))
+            put(RECIPES_INSTRUCTION, recipe.instruction.joinToString("|"))
+            put(RECIPES_IMAGE, recipe.image)
+            put(RECIPES_CATEGORY, recipe.category)
+        }
+        db.update(TABLE_RECIPES, contentValues, "$RECIPES_ID = ?", arrayOf(recipeID.toString()))
+        db.close()
+    }
+
+    fun deleteRecipe(recipeID: Int){
+        val db = writableDatabase
+        db.delete(TABLE_RECIPES, "$RECIPES_ID = ?", arrayOf(recipeID.toString()))
+        db.close()
     }
 
     fun clearTable(tableName: String) {

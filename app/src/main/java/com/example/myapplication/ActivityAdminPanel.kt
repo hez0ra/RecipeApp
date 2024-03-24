@@ -24,6 +24,7 @@ class ActivityAdminPanel : AppCompatActivity() {
         btnViewUsers = findViewById(R.id.admin_panel_btn_view_users)
         btnBack = findViewById(R.id.admin_panel_back)
         currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+        setTheme(R.style.Theme_MyApplication)
 
 
 
