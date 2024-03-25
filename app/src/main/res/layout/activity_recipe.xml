@@ -16,7 +16,7 @@
             android:layout_height="400dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_launcher_background" />
@@ -159,9 +159,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:textSize="16sp"
-            android:text="TextView"
             android:justificationMode="inter_word"
+            android:text="TextView"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -196,7 +196,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/recipe_like"
@@ -209,6 +209,26 @@
             android:background="@null"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/heart_white" />
+
+        <TextView
+            android:id="@+id/recipe_like_count"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="20"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/recipe_like_text"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_text_instruction" />
+
+        <TextView
+            android:id="@+id/recipe_like_text"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:text="Лайкнули: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_text_instruction" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

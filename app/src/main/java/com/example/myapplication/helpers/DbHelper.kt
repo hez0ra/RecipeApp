@@ -382,11 +382,11 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         db.close()
     }
 
-    fun addLike(userID: Int, recipeId: Int){
+    fun addLike(userID: Int, recipeID: Int){
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(LIKES_USER, userID)
-        values.put(LIKES_RECIPE, recipeId)
+        values.put(LIKES_RECIPE, recipeID)
         db.insert(TABLE_LIKES, null, values)
         db.close()
     }
@@ -409,6 +409,14 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
             recipeList.add(recipe)
         }
         return recipeList
+    }
+
+    fun amountLikes(recipeID: Int): Int{
+        val db = this.writableDatabase
+        val result = db.rawQuery("SELECT * FROM $TABLE_LIKES WHERE $LIKES_RECIPE = ?", arrayOf(recipeID.toString()))
+        var i = 0
+        while (result.moveToNext()) i++
+        return i
     }
 
 }

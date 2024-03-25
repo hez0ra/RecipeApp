@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.ActivityAddRecipe
+import com.example.myapplication.ActivityRecipe
 import com.example.myapplication.R
 import com.example.myapplication.Recipe
 import com.example.myapplication.helpers.ChangeColor
@@ -57,6 +58,12 @@ class AdapterViewRecipes(private var items: List<Recipe>, var context: Context, 
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
             ChangeColor.invertColors(holder.btnDelete)
             ChangeColor.invertColors(holder.btnEdit)
+        }
+
+        holder.name.setOnClickListener {
+            val intent = Intent(context, ActivityRecipe::class.java)
+            intent.putExtra("id", items[pos]!!.id)
+            context.startActivity(intent)
         }
 
         // Получаем массив байтов изображения

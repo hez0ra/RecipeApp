@@ -24,6 +24,7 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
     private var btnAddIngredients: ImageButton? = null
     private var btnAddInstructions: ImageButton? = null
     private var btnConfirm: Button? = null
+    private var btnCansel: Button? = null
     private var name:EditText? = null
     private var kcal:EditText? = null
     private var time:EditText? = null
@@ -49,6 +50,7 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
         btnAddIngredients = findViewById(R.id.add_recipe_btn_ingr)
         btnAddInstructions = findViewById(R.id.add_recipe_btn_instr)
         btnConfirm = findViewById(R.id.add_recipe_btn_confirm)
+        btnCansel = findViewById(R.id.add_recipe_btn_cansel)
         ingredientsName = findViewById(R.id.add_recipe_ingr_name)
         ingredientsAmount = findViewById(R.id.add_recipe_ingr_amount)
         name = findViewById(R.id.add_recipe_name)
@@ -67,6 +69,7 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
         btnAddInstructions?.setOnClickListener { addInstr() }
         img?.setOnClickListener { addImage() }
         btnConfirm?.setOnClickListener { addRecipe() }
+        btnCansel?.setOnClickListener { finish() }
 
         // При тёмной теме делать иконки белыми
         if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
@@ -133,7 +136,7 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
         val Image = ImageHelper.getBitmapFromDrawable(img!!.drawable)
 
         if(Name != "" && Kcal != "" && Time != "" && Serv != "" && Image != ImageHelper.getBitmapFromDrawable(ContextCompat.getDrawable(this, R.drawable.plus)!!) && arrayOfIngredients.size != 0 && arrayOfInstructions.size != 0){
-            Toast.makeText(this, "nice", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Рецепт успешно добавлен", Toast.LENGTH_SHORT).show()
             val dbHelper = DbHelper(this, null)
             val selectedCategory = when(category?.selectedItem.toString()){
                 "Пицца" -> "pizza"
