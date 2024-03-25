@@ -35,6 +35,7 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
     private var kcal: TextView? = null
     private var serv: TextView? = null
     private var instruction: TextView? = null
+    private var amountLikes: TextView? = null
     private var recipe: Recipe? = null
     private var backBlur: BlurView? = null
     private var likeBlur: BlurView? = null
@@ -63,6 +64,7 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
         instruction = findViewById(R.id.recipe_text_instruction)
         backBlur = findViewById(R.id.recipe_back_blur)
         likeBlur = findViewById(R.id.recipe_like_blur)
+        amountLikes = findViewById(R.id.recipe_like_count)
         dbHelper = DbHelper(this, null)
         currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
 
@@ -100,6 +102,8 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
             .into(mainImg!!)
         val ingr: List<String> = recipe!!.ingridients
         recyclerIngredients?.adapter = AdapterRecipe(ingr, this)
+
+        amountLikes?.text = dbHelper.amountLikes(recipe!!.id).toString()
 
         btnBack?.setOnClickListener {
             finish()
