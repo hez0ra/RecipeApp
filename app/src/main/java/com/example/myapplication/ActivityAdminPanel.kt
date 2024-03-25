@@ -13,7 +13,7 @@ class ActivityAdminPanel : AppCompatActivity() {
     private var btnViewRecipe: Button? = null
     private var btnViewUsers: Button? = null
     private var btnBack: ImageButton? = null
-    private  var currentNightMode: Int = -1
+    private var currentNightMode: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,9 +24,6 @@ class ActivityAdminPanel : AppCompatActivity() {
         btnViewUsers = findViewById(R.id.admin_panel_btn_view_users)
         btnBack = findViewById(R.id.admin_panel_back)
         currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
-        setTheme(R.style.Theme_MyApplication)
-
-
 
         btnAddRecipe?.setOnClickListener { toAddRecipe() }
         btnViewRecipe?.setOnClickListener { toViewRecipe() }

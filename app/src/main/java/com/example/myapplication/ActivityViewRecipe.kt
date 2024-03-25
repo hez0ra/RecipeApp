@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.AdapterViewRecipes
 import com.example.myapplication.adapters.AdapterViewUsers
+import com.example.myapplication.helpers.ChangeColor
 import com.example.myapplication.helpers.DbHelper
 import com.example.myapplication.helpers.Delete
 
@@ -15,6 +16,7 @@ class ActivityViewRecipe : AppCompatActivity(), Delete {
     private var btnBack: ImageButton? = null
     private var recycler: RecyclerView? = null
     private var dbHelper: DbHelper? = null
+    private var currentNightMode: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,9 +25,16 @@ class ActivityViewRecipe : AppCompatActivity(), Delete {
         btnBack = findViewById(R.id.view_recipes_back)
         recycler = findViewById(R.id.view_recipes_recycler)
         dbHelper = DbHelper(this, null)
+        currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+
 
         recycler?.adapter = AdapterViewRecipes(dbHelper?.getAllRecipes()!!, this, this)
 
+        btnBack?.setOnClickListener { finish() }
+
+        if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
+            ChangeColor.invertColors(btnBack)
+        }
 
         supportActionBar?.hide()
     }

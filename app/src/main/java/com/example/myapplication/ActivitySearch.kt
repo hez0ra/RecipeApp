@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.AdapterSearch
@@ -18,6 +20,7 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
     private var recycler: RecyclerView? = null
     private var btnSearch: ImageButton? = null
     private var input: EditText? = null
+    private var noResult: TextView? = null
     private lateinit var dbHelper: DbHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +30,10 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
         recycler = findViewById(R.id.search_recycler)
         btnSearch = findViewById(R.id.search_btn)
         input = findViewById(R.id.search_input)
+        noResult = findViewById(R.id.search_no_result)
         dbHelper = DbHelper(this, null)
 
+        input?.setText(intent.getStringExtra("input"))
         val adapter: AdapterSearch = when(intent.getStringExtra("variant")){
             "all" -> AdapterSearch(dbHelper.getAllRecipes(), this, this)
             "pizza" -> AdapterSearch(dbHelper.getRecipesByCategory("pizza"), this, this)
@@ -42,9 +47,8 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
             "salad" -> AdapterSearch(dbHelper.getRecipesByCategory("salad"), this, this)
             else -> AdapterSearch(dbHelper.getAllRecipes(), this, this)
         }
-        recycler?.adapter = adapter
-        input?.setText(intent.getStringExtra("input"))
         adapter.filter.filter(input?.text.toString())
+        recycler?.adapter = adapter
 
         input?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -54,7 +58,12 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
             }
         })
 
-
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                super.onChanged()
+                checkResult(adapter.itemCount)
+            }
+        })
         supportActionBar?.hide()
     }
 
@@ -89,4 +98,18 @@ class ActivitySearch : AppCompatActivity(), OnLikeClickListener {
             Toast.makeText(this, "Сначала зайдите в аккаунт", Toast.LENGTH_LONG).show()
         }
     }
+
+
+
+    private fun checkResult(itemCount: Int){
+        if(itemCount == 0){
+            noResult?.visibility = View.VISIBLE
+            recycler?.visibility = View.GONE
+        }
+        else{
+            noResult?.visibility = View.GONE
+            recycler?.visibility = View.VISIBLE
+        }
+    }
+
 }

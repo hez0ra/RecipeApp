@@ -113,5 +113,4 @@ class AdapterSearch(var items: List<Recipe?>, var context: Context, private val 
         }
     }
 
-
 }

@@ -40,11 +40,22 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/search_no_result"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:text="Ничего не найдено"
+        android:textSize="24sp"
+        android:visibility="gone"
+        android:layout_height="0dp"
+        android:layout_weight="20"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_weight="20"/>
+
 
 </LinearLayout>
