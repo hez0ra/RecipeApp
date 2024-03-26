@@ -68,8 +68,8 @@ class ActivityProfile : AppCompatActivity() {
 
 
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.makeImageWhite(btnLogOut)
-            ChangeColor.makeImageWhite(btnBack)
+            ImageHelper.makeImageWhite(btnLogOut)
+            ImageHelper.makeImageWhite(btnBack)
         }
 
         Glide.with(this)
@@ -143,7 +143,7 @@ class ActivityProfile : AppCompatActivity() {
         }
 
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.makeImageWhite(btnDialogClose)
+            ImageHelper.makeImageWhite(btnDialogClose)
         }
     }
 
@@ -181,7 +181,7 @@ class ActivityProfile : AppCompatActivity() {
         }
 
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.makeImageWhite(btnDialogClose)
+            ImageHelper.makeImageWhite(btnDialogClose)
         }
     }
     private fun getImage() {

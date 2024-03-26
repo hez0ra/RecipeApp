@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
-import com.example.myapplication.helpers.ChangeColor
+import com.example.myapplication.helpers.ImageHelper
+
+// TODO: переделать в фрагмент
 
 class ActivityAdminPanel : AppCompatActivity() {
 
@@ -32,7 +34,7 @@ class ActivityAdminPanel : AppCompatActivity() {
 
         // При тёмной теме делать иконки белыми
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.invertColors(btnBack)
+            ImageHelper.invertColors(btnBack)
         }
 
         supportActionBar?.hide()

@@ -7,8 +7,8 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import com.example.myapplication.helpers.ChangeColor
 import com.example.myapplication.helpers.DbHelper
+import com.example.myapplication.helpers.ImageHelper
 
 class ActivityRegistration : AppCompatActivity() {
 
@@ -74,7 +74,7 @@ class ActivityRegistration : AppCompatActivity() {
         }
 
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.makeImageWhite(btnBack)
+            ImageHelper.makeImageWhite(btnBack)
         }
 
         supportActionBar?.hide()

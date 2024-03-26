@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapplication.adapters.AdapterAddRecipeIngr
 import com.example.myapplication.adapters.AdapterAddRecipeInstruction
-import com.example.myapplication.helpers.ChangeColor
 import com.example.myapplication.helpers.DbHelper
 import com.example.myapplication.helpers.Delete
 import com.example.myapplication.helpers.ImageHelper
@@ -73,8 +72,8 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
 
         // При тёмной теме делать иконки белыми
         if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-            ChangeColor.invertColors(btnAddIngredients)
-            ChangeColor.invertColors(btnAddInstructions)
+            ImageHelper.invertColors(btnAddIngredients)
+            ImageHelper.invertColors(btnAddInstructions)
         }
 
         checkIfEdit()

@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.example.myapplication.R
 import eightbitlab.com.blurview.BlurView
@@ -270,6 +271,32 @@ object ImageHelper {
         val drawableId = R.drawable.ava
         val drawable = ContextCompat.getDrawable(context, drawableId)
         return drawable!!
+    }
+
+    fun invertColors(imageView: ImageView?) {
+        val matrix = ColorMatrix().apply {
+            set(floatArrayOf(
+                -1f,  0f,  0f, 0f, 255f,
+                0f, -1f,  0f, 0f, 255f,
+                0f,  0f, -1f, 0f, 255f,
+                0f,  0f,  0f, 1f, 0f
+            ))
+        }
+        val filter = ColorMatrixColorFilter(matrix)
+        imageView?.setColorFilter(filter)
+    }
+
+    fun makeImageWhite(imageView: ImageView?) {
+        val matrix = ColorMatrix().apply {
+            set(floatArrayOf(
+                1f, 0f, 0f, 0f, 255f, // Увеличение красного канала
+                0f, 1f, 0f, 0f, 255f, // Увеличение зеленого канала
+                0f, 0f, 1f, 0f, 255f, // Увеличение синего канала
+                0f, 0f, 0f, 1f, 0f    // Не изменять альфа-канал
+            ))
+        }
+        val filter = ColorMatrixColorFilter(matrix)
+        imageView?.colorFilter = filter
     }
 
 }

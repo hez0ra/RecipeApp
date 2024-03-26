@@ -17,7 +17,7 @@ import com.example.myapplication.ActivityAddRecipe
 import com.example.myapplication.ActivityRecipe
 import com.example.myapplication.R
 import com.example.myapplication.Recipe
-import com.example.myapplication.helpers.ChangeColor
+import com.example.myapplication.helpers.ImageHelper
 import com.example.myapplication.helpers.Delete
 
 class AdapterViewRecipes(private var items: List<Recipe>, var context: Context, private val listener: Delete): RecyclerView.Adapter<AdapterViewRecipes.MyViewHolder>() {
@@ -56,8 +56,8 @@ class AdapterViewRecipes(private var items: List<Recipe>, var context: Context, 
 
         val currentNightMode = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.invertColors(holder.btnDelete)
-            ChangeColor.invertColors(holder.btnEdit)
+            ImageHelper.invertColors(holder.btnDelete)
+            ImageHelper.invertColors(holder.btnEdit)
         }
 
         holder.name.setOnClickListener {

@@ -15,7 +15,6 @@ import com.bumptech.glide.load.Transformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.R
-import com.example.myapplication.helpers.ChangeColor
 import com.example.myapplication.helpers.Delete
 import com.example.myapplication.helpers.ImageHelper
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
@@ -65,7 +64,7 @@ class AdapterAddRecipeIngr(private var items: List<String>, var context: Context
 
         val currentNightMode = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.invertColors(holder.delete)
+            ImageHelper.invertColors(holder.delete)
         }
 
         holder.delete.setOnClickListener {

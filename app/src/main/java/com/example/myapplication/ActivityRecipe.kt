@@ -139,10 +139,10 @@ class ActivityRecipe : AppCompatActivity(), OnLikeClickListener {
 
         // При тёмной теме делать иконки белыми
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.makeImageWhite(kcalImg)
-            ChangeColor.makeImageWhite(minutesImg)
-            ChangeColor.makeImageWhite(servImg)
-            ChangeColor.invertColors(btnBack)
+            ImageHelper.makeImageWhite(kcalImg)
+            ImageHelper.makeImageWhite(minutesImg)
+            ImageHelper.makeImageWhite(servImg)
+            ImageHelper.invertColors(btnBack)
         }
         supportActionBar?.hide()
 

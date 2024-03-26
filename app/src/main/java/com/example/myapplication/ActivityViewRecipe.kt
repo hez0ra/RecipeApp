@@ -6,10 +6,9 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.adapters.AdapterViewRecipes
-import com.example.myapplication.adapters.AdapterViewUsers
-import com.example.myapplication.helpers.ChangeColor
 import com.example.myapplication.helpers.DbHelper
 import com.example.myapplication.helpers.Delete
+import com.example.myapplication.helpers.ImageHelper
 
 class ActivityViewRecipe : AppCompatActivity(), Delete {
 
@@ -33,7 +32,7 @@ class ActivityViewRecipe : AppCompatActivity(), Delete {
         btnBack?.setOnClickListener { finish() }
 
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.invertColors(btnBack)
+            ImageHelper.invertColors(btnBack)
         }
 
         supportActionBar?.hide()

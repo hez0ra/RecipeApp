@@ -9,7 +9,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.myapplication.helpers.ActiveUser
-import com.example.myapplication.helpers.ChangeColor
+import com.example.myapplication.helpers.ImageHelper
 import com.example.myapplication.helpers.SharedPreferencesManager
 
 class FragmentFooter: Fragment() {
@@ -38,9 +38,9 @@ class FragmentFooter: Fragment() {
 
         // При тёмной теме делать иконки белыми
         if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
-            ChangeColor.invertColors(btnHome)
-            ChangeColor.invertColors(btnLikes)
-            ChangeColor.invertColors(btnAdmin)
+            ImageHelper.invertColors(btnHome)
+            ImageHelper.invertColors(btnLikes)
+            ImageHelper.invertColors(btnAdmin)
         }
 
         // Обработка нажатий

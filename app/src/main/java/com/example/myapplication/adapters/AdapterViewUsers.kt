@@ -14,6 +14,7 @@ import com.example.myapplication.User
 import com.example.myapplication.helpers.ActiveUser
 import com.example.myapplication.helpers.DbHelper
 import com.example.myapplication.helpers.Delete
+import com.example.myapplication.helpers.ImageHelper
 import de.hdodenhof.circleimageview.CircleImageView
 
 class AdapterViewUsers(private var items: List<User>, var context: Context, private val listener: Delete) : RecyclerView.Adapter<AdapterViewUsers.MyViewHolder>() {
@@ -51,6 +52,11 @@ class AdapterViewUsers(private var items: List<User>, var context: Context, priv
         Glide.with(context)
             .load(items[pos].image)
             .into(holder.img)
+
+        val currentNightMode = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+        if(currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES){
+            ImageHelper.invertColors(holder.delete)
+        }
 
         if(ActiveUser.getUserId() == items[pos].userID){
             holder.setAdmin.visibility = View.GONE
