@@ -27,10 +27,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityAdminPanel"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ActivityAddRecipe"
             android:exported="false"
             android:windowSoftInputMode="adjustNothing"

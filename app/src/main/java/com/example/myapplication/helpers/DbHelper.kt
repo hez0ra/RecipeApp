@@ -376,12 +376,6 @@ class DbHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         db.close()
     }
 
-//    TODO: убрать клир табле
-    fun clearTable(tableName: String) {
-        val db = writableDatabase
-        db.delete(tableName, null, null)
-        db.close()
-    }
     fun addLike(userID: Int, recipeID: Int){
         val db = this.writableDatabase
         val values = ContentValues()

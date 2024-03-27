@@ -14,9 +14,9 @@
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:background="@null"
         android:padding="5dp"
         android:scaleType="centerCrop"
-        android:background="@null"
         android:src="@drawable/arrow_back" />
 
     <TextView
@@ -24,11 +24,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/roboto_bold"
-        android:textSize="20sp"
         android:layout_marginTop="80dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Авторизация"
         android:textColor="?attr/colorSecondary"
-        android:text="Авторизация" />
+        android:textSize="20sp" />
 
 
     <EditText
@@ -36,24 +36,24 @@
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Введите email или никнейм"
         android:layout_marginTop="80dp"
+        android:ems="10"
+        android:hint="Введите email или никнейм"
+        android:inputType="textEmailAddress"
         android:textColor="?attr/colorSecondary"
-        android:textColorHint="?attr/colorSecondaryVariant"/>
+        android:textColorHint="?attr/colorSecondaryVariant" />
 
     <EditText
         android:id="@+id/auth_pass"
         android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:hint="Введите пароль"
         android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Введите пароль"
+        android:inputType="textPassword"
         android:textColor="?attr/colorSecondary"
-        android:textColorHint="?attr/colorSecondaryVariant"/>
+        android:textColorHint="?attr/colorSecondaryVariant" />
 
     <CheckBox
         android:id="@+id/auth_check"
@@ -61,34 +61,25 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:textColor="?attr/colorSecondary"
-        android:text="Не выходить из аккаунта" />
+        android:text="Не выходить из аккаунта"
+        android:textColor="?attr/colorSecondary" />
 
     <Button
         android:id="@+id/btn_auth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textAllCaps="false"
         android:layout_marginTop="40dp"
-        android:text="Авторизироваться" />
+        android:text="Авторизироваться"
+        android:textAllCaps="false" />
 
     <TextView
         android:id="@+id/to_reg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
-        android:textColor="?attr/colorSecondary"
-        android:text="Регистрация" />
-
-    <TextView
-        android:id="@+id/DROPDB"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="20dp"
-        android:text="DROP DATABASE" />
-
+        android:layout_marginTop="30dp"
+        android:text="Регистрация"
+        android:textColor="?attr/colorSecondary" />
 
 </LinearLayout>

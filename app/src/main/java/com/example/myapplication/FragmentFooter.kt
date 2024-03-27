@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -56,7 +55,6 @@ class FragmentFooter: Fragment() {
         else{
             btnAdmin?.visibility = View.GONE
         }
-
     }
 
     override fun onResume() {
@@ -121,7 +119,16 @@ class FragmentFooter: Fragment() {
     }
 
     private fun toAdminPanel(){
-        val  intent = Intent(requireContext(), ActivityAdminPanel::class.java)
-        startActivity(intent)
+        val fragmentManager = requireActivity().supportFragmentManager
+
+        // Создаем транзакцию фрагментов
+        val transaction = fragmentManager.beginTransaction()
+
+        // Заменяем текущий главный фрагмент на новый
+        val newFragment = FragmentAdminPanel() // Замените YourNewMainFragment на ваш фрагмент
+        transaction.replace(R.id.main_container, newFragment)
+
+        // Закрываем транзакцию
+        transaction.commit()
     }
 }

@@ -32,15 +32,7 @@ class ActivityAuthorization : AppCompatActivity() {
         pass = findViewById(R.id.auth_pass)
         check = findViewById(R.id.auth_check)
         toReg = findViewById(R.id.to_reg)
-        drop = findViewById(R.id.DROPDB)
         currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
-
-
-        drop?.setOnClickListener {
-            val dbHelper = DbHelper(this, null)
-            dbHelper.clearTable("users")
-            dbHelper.clearTable("recipes")
-        }
 
         btnBack?.setOnClickListener{
             finish()
