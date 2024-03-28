@@ -5,16 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.myapplication.helpers.ActiveUser
+import de.hdodenhof.circleimageview.CircleImageView
 
 class FragmentHeader : Fragment() {
-    private var accIcon: ImageView? = null
+    private var accIcon: CircleImageView? = null
     private var greeting: TextView? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_header, container, false)
