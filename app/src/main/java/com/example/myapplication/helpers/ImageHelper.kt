@@ -32,7 +32,7 @@ object ImageHelper {
     }
 
     fun translate(string: String): String{
-        when(string.lowercase()){
+        when(string.lowercase().trim()){
             "куриное яйцо", "яйцо" -> return "egg_chicken"
             "чеснок" -> return "garlic"
             "лимонный сок" -> return "lemon_juice"

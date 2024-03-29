@@ -8,9 +8,7 @@ import android.graphics.drawable.LayerDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.ActivityAddRecipe
@@ -20,7 +18,9 @@ import com.example.myapplication.Recipe
 import com.example.myapplication.helpers.ImageHelper
 import com.example.myapplication.helpers.Delete
 
-class AdapterViewRecipes(private var items: List<Recipe>, var context: Context, private val listener: Delete): RecyclerView.Adapter<AdapterViewRecipes.MyViewHolder>() {
+class AdapterViewRecipes(private var items: List<Recipe>, var context: Context, private val listener: Delete): RecyclerView.Adapter<AdapterViewRecipes.MyViewHolder>(), Filterable {
+
+    private var filteredList: List<Recipe> = items
 
     class MyViewHolder(view: View): RecyclerView.ViewHolder(view){
         val name: TextView = view.findViewById(R.id.view_recipe_name)
@@ -39,18 +39,18 @@ class AdapterViewRecipes(private var items: List<Recipe>, var context: Context, 
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return filteredList.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, pos: Int) {
-        holder.name.text = items[pos].name
-        holder.time.text = items[pos].time.toString()
-        holder.kcal.text = items[pos].kcal.toString()
-        holder.serv.text = items[pos].serv.toString()
-        holder.btnDelete.setOnClickListener{listener.onDeleteClick(items[pos].id)}
+        holder.name.text = filteredList[pos].name
+        holder.time.text = filteredList[pos].time.toString()
+        holder.kcal.text = filteredList[pos].kcal.toString()
+        holder.serv.text = filteredList[pos].serv.toString()
+        holder.btnDelete.setOnClickListener{listener.onDeleteClick(filteredList[pos].id)}
         holder.btnEdit.setOnClickListener {
             val intent = Intent(context, ActivityAddRecipe::class.java)
-            intent.putExtra("id", items[pos].id)
+            intent.putExtra("id", filteredList[pos].id)
             context.startActivity(intent)
         }
 
@@ -62,15 +62,15 @@ class AdapterViewRecipes(private var items: List<Recipe>, var context: Context, 
 
         holder.name.setOnClickListener {
             val intent = Intent(context, ActivityRecipe::class.java)
-            intent.putExtra("id", items[pos]!!.id)
+            intent.putExtra("id", filteredList[pos].id)
             context.startActivity(intent)
         }
 
         // Получаем массив байтов изображения
-        val imageByteArray = items[pos]?.image
+        val imageByteArray = filteredList[pos].image
 
         // Преобразуем массив байтов в Drawable
-        val yourImageDrawable = BitmapDrawable(context.resources, BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray!!.size))
+        val yourImageDrawable = BitmapDrawable(context.resources, BitmapFactory.decodeByteArray(imageByteArray, 0, imageByteArray.size))
 
         // Получаем ссылку на ресурс, представляющий слой layer-list
         val layerDrawable = ContextCompat.getDrawable(context, R.drawable.white_foreground) as? LayerDrawable
@@ -81,4 +81,27 @@ class AdapterViewRecipes(private var items: List<Recipe>, var context: Context, 
         // Устанавливаем измененный Drawable в качестве фона для макета элемента
         holder.layout.background = layerDrawable
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString = constraint.toString().trim()
+                filteredList = if (charString.isEmpty()) {
+                    items
+                } else {
+                    val filteredList = items.filter { it.name.contains(charString, ignoreCase = true) }
+                    filteredList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as List<Recipe>
+                notifyDataSetChanged()
+            }
+        }
+    }
+
 }

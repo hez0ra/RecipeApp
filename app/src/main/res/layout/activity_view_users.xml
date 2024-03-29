@@ -7,16 +7,49 @@
     android:layout_height="match_parent"
     tools:context=".ActivityViewUsers">
 
-    <ImageButton
-        android:id="@+id/view_users_back"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@null"
-        android:padding="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/arrow_back"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/view_users_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@null"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/arrow_back"/>
+
+        <EditText
+            android:id="@+id/view_users_input"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="4"
+            android:background="@drawable/searchbar_rounded_left"
+            android:fontFamily="@font/roboto"
+            android:layout_marginStart="8dp"
+            android:hint="@string/search"
+            android:layout_gravity="bottom"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="10dp" />
+
+        <ImageButton
+            android:id="@+id/view_users_img_search"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="48dp"
+            android:layout_marginEnd="24dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="bottom"
+            android:background="@drawable/searchbar_rounded_right"
+            android:contentDescription="@string/search"
+            android:src="@drawable/ic_search" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/view_users_recycler"

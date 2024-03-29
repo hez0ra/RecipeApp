@@ -32,6 +32,9 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
     private var ingredientsAmount: EditText? = null
     private var instrText: EditText? = null
     private var img: ImageView? = null
+    private var imgTime: ImageView? = null
+    private var imgKcal: ImageView? = null
+    private var imgServ: ImageView? = null
     private var arrayOfIngredients = arrayListOf<String>()
     private var arrayOfInstructions = arrayListOf<String>()
     private  var currentNightMode: Int = -1
@@ -57,6 +60,9 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
         time = findViewById(R.id.add_recipe_time)
         serv = findViewById(R.id.add_recipe_serv)
         img = findViewById(R.id.add_recipe_img)
+        imgTime = findViewById(R.id.add_recipe_img_time)
+        imgKcal = findViewById(R.id.add_recipe_img_kcal)
+        imgServ = findViewById(R.id.add_recipe_img_serv)
         instrText = findViewById(R.id.add_recipe_instruction_input)
         currentNightMode = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
 
@@ -74,6 +80,10 @@ class ActivityAddRecipe : AppCompatActivity(), Delete {
         if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
             ImageHelper.invertColors(btnAddIngredients)
             ImageHelper.invertColors(btnAddInstructions)
+            ImageHelper.makeImageWhite(imgKcal)
+            ImageHelper.makeImageWhite(imgTime)
+            ImageHelper.makeImageWhite(imgServ)
+
         }
 
         checkIfEdit()

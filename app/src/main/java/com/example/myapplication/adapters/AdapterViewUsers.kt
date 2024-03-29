@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
+import com.example.myapplication.Recipe
 import com.example.myapplication.User
 import com.example.myapplication.helpers.ActiveUser
 import com.example.myapplication.helpers.DbHelper
@@ -17,7 +18,9 @@ import com.example.myapplication.helpers.Delete
 import com.example.myapplication.helpers.ImageHelper
 import de.hdodenhof.circleimageview.CircleImageView
 
-class AdapterViewUsers(private var items: List<User>, var context: Context, private val listener: Delete) : RecyclerView.Adapter<AdapterViewUsers.MyViewHolder>() {
+class AdapterViewUsers(private var items: List<User>, var context: Context, private val listener: Delete) : RecyclerView.Adapter<AdapterViewUsers.MyViewHolder>(), Filterable {
+
+    private var filteredList: MutableList<User> = items.toMutableList()
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val delete: ImageButton = view.findViewById(R.id.view_users_btn_delete)
@@ -36,21 +39,21 @@ class AdapterViewUsers(private var items: List<User>, var context: Context, priv
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return filteredList.size
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, pos: Int) {
 
         val dbHelper = DbHelper(context, null)
 
-        holder.userName.text = "Username: ${items[pos].userName}"
-        holder.email.text = "Email: ${items[pos].email}"
-        holder.isAdmin.text = "Admin: ${dbHelper.adminCheck(items[pos].userID)}"
-        holder.attachToCreate.text = "Attach to create: ${dbHelper.attachToCreateCheck(items[pos].userID)}"
-        holder.id.text = "ID: ${items[pos].userID}"
+        holder.userName.text = "Username: ${filteredList[pos].userName}"
+        holder.email.text = "Email: ${filteredList[pos].email}"
+        holder.isAdmin.text = "Admin: ${dbHelper.adminCheck(filteredList[pos].userID)}"
+        holder.attachToCreate.text = "Attach to create: ${dbHelper.attachToCreateCheck(filteredList[pos].userID)}"
+        holder.id.text = "ID: ${filteredList[pos].userID}"
 
         Glide.with(context)
-            .load(items[pos].image)
+            .load(filteredList[pos].image)
             .into(holder.img)
 
         val currentNightMode = context.resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
@@ -58,16 +61,16 @@ class AdapterViewUsers(private var items: List<User>, var context: Context, priv
             ImageHelper.invertColors(holder.delete)
         }
 
-        if(ActiveUser.getUserId() == items[pos].userID){
+        if(ActiveUser.getUserId() == filteredList[pos].userID){
             holder.setAdmin.visibility = View.GONE
             holder.delete.visibility = View.GONE
             holder.userName.setTextColor(ContextCompat.getColor(context, R.color.red))
         }
-        else if(items[pos].userID == 1){
+        else if(filteredList[pos].userID == 1){
             holder.delete.visibility = View.GONE
             holder.setAdmin.visibility = View.GONE
         }
-        else if(dbHelper.adminCheck(items[pos].userID) && ActiveUser.getAttachToCreate()){
+        else if(dbHelper.adminCheck(filteredList[pos].userID) && ActiveUser.getAttachToCreate()){
             holder.setAdmin.text = "Забрать admin права"
             holder.setAdmin.setOnClickListener { removeAdmin(pos) }
         }
@@ -82,7 +85,7 @@ class AdapterViewUsers(private var items: List<User>, var context: Context, priv
         }
 
         holder.delete.setOnClickListener {
-            listener.onDeleteClick(items[pos].userID)
+            listener.onDeleteClick(filteredList[pos].userID)
         }
     }
 
@@ -104,7 +107,7 @@ class AdapterViewUsers(private var items: List<User>, var context: Context, priv
         btnDialogClose.setOnClickListener { dialog.dismiss() }
         btnDialogConfirm.setOnClickListener {
             val dbHelper = DbHelper(context, null)
-            dbHelper.addAdmin(items[pos].userID, dialogCheckBox.isChecked)
+            dbHelper.addAdmin(filteredList[pos].userID, dialogCheckBox.isChecked)
             notifyItemChanged(pos)
             dialog.dismiss()
         }
@@ -115,7 +118,7 @@ class AdapterViewUsers(private var items: List<User>, var context: Context, priv
         builder.apply {
             setMessage("Вы точно хотите забрать права администратора у этого пользователя?")
             setPositiveButton("Подтвердить") { dialog, _ ->
-                dbHelper.deleteAdmin(items[pos].userID)
+                dbHelper.deleteAdmin(filteredList[pos].userID)
                 notifyItemChanged(pos)
                 dialog.dismiss()
             }
@@ -127,4 +130,37 @@ class AdapterViewUsers(private var items: List<User>, var context: Context, priv
         val dialog = builder.create()
         dialog.show()
     }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charString = constraint.toString().lowercase().trim()
+                val tempList = mutableListOf<User>() // Используем временный список
+
+                if (charString.isEmpty()) {
+                    tempList.addAll(items)
+                } else {
+                    for (item in items) {
+                        if (item.userName.lowercase().contains(charString) ||
+                            item.email.lowercase().contains(charString) ||
+                            item.userID.toString().contains(charString)
+                        ) {
+                            tempList.add(item)
+                        }
+                    }
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = tempList.toList()
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList.clear() // Очищаем текущий список
+                filteredList.addAll(results?.values as List<User>) // Добавляем новые элементы
+                notifyDataSetChanged()
+            }
+        }
+    }
+
 }

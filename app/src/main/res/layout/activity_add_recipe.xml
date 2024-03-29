@@ -36,33 +36,76 @@
             android:layout_height="match_parent">
 
 
-            <EditText
-                android:id="@+id/add_recipe_kcal"
-                android:layout_gravity="center"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:hint="Количество каллорий"
-                android:layout_marginHorizontal="5dp"
-                android:inputType="number"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
-            <EditText
-                android:id="@+id/add_recipe_time"
-                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/add_recipe_img_time"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/clocks"/>
+
+                <EditText
+                    android:id="@+id/add_recipe_time"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:hint="Время готовки (мин)"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_height="match_parent"
+                    android:inputType="number"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:hint="Время на приготовлени (мин)"
-                android:layout_marginHorizontal="5dp"
                 android:layout_height="0dp"
-                android:inputType="number"
-                android:layout_weight="1"/>
-            <EditText
-                android:id="@+id/add_recipe_serv"
-                android:layout_gravity="center"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/add_recipe_img_kcal"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/kcal"/>
+
+                <EditText
+                    android:id="@+id/add_recipe_kcal"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:hint="Количество каллорий"
+                    android:layout_marginHorizontal="5dp"
+                    android:inputType="number"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:hint="Количество порций"
-                android:layout_marginHorizontal="5dp"
-                android:inputType="number"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/add_recipe_img_serv"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/servs"/>
+
+                <EditText
+                    android:id="@+id/add_recipe_serv"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:hint="Количество порций"
+                    android:layout_marginHorizontal="5dp"
+                    android:inputType="number"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+
+
+
+
             <Spinner
                 android:id="@+id/add_recipe_category"
                 android:layout_width="match_parent"
